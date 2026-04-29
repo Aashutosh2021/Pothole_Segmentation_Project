@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityFix | Inspection Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: #eef2f7;
+        }
+
+        .clay-card {
+            background: #ffffff;
+            border-radius: 30px;
+            box-shadow: 
+                10px 10px 20px #d1d9e6, 
+                -10px -10px 20px #ffffff,
+                inset -8px -8px 12px rgba(0,0,0,0.05), 
+                inset 8px 8px 12px rgba(255,255,255,0.8);
+        }
+
+        .clay-button {
+            border-radius: 20px;
+            transition: all 0.2s ease;
+            box-shadow: 
+                4px 4px 8px rgba(0,0,0,0.1), 
+                inset -4px -4px 8px rgba(0,0,0,0.1), 
+                inset 4px 4px 8px rgba(255,255,255,0.3);
+        }
+
+        .clay-button:active {
+            transform: scale(0.95);
+            box-shadow: 
+                inset 4px 4px 8px rgba(0,0,0,0.2), 
+                inset -4px -4px 8px rgba(255,255,255,0.1);
+        }
+
+        .clay-input {
+            border-radius: 20px;
+            background: #f8fafc;
+            box-shadow: 
+                inset 6px 6px 12px #d1d9e6, 
+                inset -6px -6px 12px #ffffff;
+            border: none;
+        }
+
+        .clay-sidebar {
+            background: #6366f1;
+            border-radius: 0 40px 40px 0;
+            box-shadow: 10px 0 30px rgba(99, 102, 241, 0.2);
+        }
+        
+        .status-pill {
+            border-radius: 15px;
+            box-shadow: inset -3px -3px 6px rgba(0,0,0,0.1), inset 3px 3px 6px rgba(255,255,255,0.4);
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+    <aside class="fixed left-0 top-0 h-screen w-64 clay-sidebar text-white p-6 hidden md:block">
+        <div class="flex items-center gap-3 mb-12 px-2">
+            <div class="bg-white p-3 rounded-2xl shadow-lg">
+                <i class="fa-solid fa-road text-indigo-600 text-xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold tracking-tight">CityFix</h1>
+        </div>
+        <nav class="space-y-6">
+            <a href="#" class="flex items-center gap-4 p-4 rounded-2xl bg-indigo-400 shadow-inner font-semibold transition">
+                <i class="fa-solid fa-list-check"></i> <span>Complaints</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="md:ml-64 p-6 md:p-10">
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-800">Inspection Portal</h2>
+                <p class="text-slate-500 font-medium">Monitoring Pothole Detections (Live)</p>
+            </div>
+        </header>
+
+        <!-- Dynamic Stats Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <div class="clay-card p-6 text-center">
+                <div class="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    <i class="fa-solid fa-robot text-indigo-600"></i>
+                </div>
+                <span class="text-slate-500 font-medium block">AI Vehicle Detections</span>
+                <div class="text-3xl font-bold text-slate-800" id="val-ai-detections">--</div>
+            </div>
+            <div class="clay-card p-6 text-center">
+                <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    <i class="fa-solid fa-users text-amber-600"></i>
+                </div>
+                <span class="text-slate-500 font-medium block">Public Complaints</span>
+                <div class="text-3xl font-bold text-slate-800" id="val-public-complaints">--</div>
+            </div>
+            <div class="clay-card p-6 text-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    <i class="fa-solid fa-hammer text-blue-600"></i>
+                </div>
+                <span class="text-slate-500 font-medium block">In Progress</span>
+                <div class="text-3xl font-bold text-slate-800" id="val-in-progress">--</div>
+            </div>
+            <div class="clay-card p-6 text-center">
+                <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                </div>
+                <span class="text-slate-500 font-medium block">Resolved</span>
+                <div class="text-3xl font-bold text-slate-800" id="val-resolved">--</div>
+            </div>
+        </div>
+
+        <!-- Two tables: AI Detections & Public Complaints -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- AI Detections Table -->
+            <div class="clay-card overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-slate-800">AI Detections</h3>
+                </div>
+                <table class="w-full text-left">
+                    <thead class="bg-indigo-50/50">
+                        <tr class="text-slate-500 uppercase text-xs font-bold tracking-wider">
+                            <th class="p-4">ID</th>
+                            <th class="p-4">GPS Location</th>
+                            <th class="p-4">Severity</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100" id="ai-table-body">
+                        <!-- AI Data here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Public Complaints Table -->
+            <div class="clay-card overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+                    <h3 class="text-xl font-bold text-slate-800">Public Complaints</h3>
+                </div>
+                <table class="w-full text-left">
+                    <thead class="bg-amber-50/50">
+                        <tr class="text-slate-500 uppercase text-xs font-bold tracking-wider">
+                            <th class="p-4">ID</th>
+                            <th class="p-4">GPS Location</th>
+                            <th class="p-4">Severity</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100" id="public-table-body">
+                        <!-- Public Data here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="fixed inset-0 bg-slate-900/50 items-center justify-center z-50" style="display: none;">
+        <div class="clay-card w-full max-w-3xl p-8 m-4 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeReviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-6 text-slate-800">Review Repair</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h4 class="font-semibold text-slate-600 mb-2">Original Pothole</h4>
+                    <img id="review-orig-img" class="w-full h-48 object-cover rounded-xl shadow-inner mb-2" />
+                    <p class="text-sm font-medium text-slate-500"><i class="fa-solid fa-location-dot text-indigo-400"></i> <span id="review-orig-gps"></span></p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-emerald-600 mb-2">Repaired Pothole</h4>
+                    <img id="review-rep-img" class="w-full h-48 object-cover rounded-xl shadow-inner mb-2" />
+                    <p class="text-sm font-medium text-emerald-600"><i class="fa-solid fa-location-crosshairs"></i> <span id="review-worker-gps"></span></p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button onclick="rejectRepair()" id="reject-btn" class="clay-button w-full bg-red-500 text-white font-bold py-3 text-lg hover:bg-red-600">
+                    Reject Repair
+                </button>
+                <button onclick="approveAndClose()" id="approve-btn" class="clay-button w-full bg-emerald-500 text-white font-bold py-3 text-lg hover:bg-emerald-600">
+                    Approve & Close Complaint
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allPublicComplaints = [];
+        let reviewComplaintId = null;
+
+        function openReviewModal(index) {
+            const complaint = allPublicComplaints[index];
+            reviewComplaintId = complaint.id;
+            document.getElementById("review-orig-img").src = complaint.image || 'https://via.placeholder.com/400x200?text=No+Image';
+            document.getElementById("review-orig-gps").innerText = complaint.gps || 'Unknown';
+            document.getElementById("review-rep-img").src = complaint.repaired_image || 'https://via.placeholder.com/400x200?text=No+Image';
+            document.getElementById("review-worker-gps").innerText = complaint.worker_gps || 'Unknown';
+            document.getElementById("review-modal").style.display = "flex";
+        }
+
+        function closeReviewModal() {
+            document.getElementById("review-modal").style.display = "none";
+        }
+
+        async function approveAndClose() {
+            const btn = document.getElementById("approve-btn");
+            btn.disabled = true;
+            btn.innerText = "Approving...";
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/v1/public_complaints/${reviewComplaintId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: "Resolved" })
+                });
+
+                if (response.ok) {
+                    closeReviewModal();
+                    fetchDashboardData();
+                } else {
+                    alert("Error approving repair.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+            btn.disabled = false;
+            btn.innerText = "Approve & Close Complaint";
+        }
+
+        async function rejectRepair() {
+            const btn = document.getElementById("reject-btn");
+            btn.disabled = true;
+            btn.innerText = "Rejecting...";
+
+            try {
+                // Set status back to "In Progress" so the worker can resubmit
+                const response = await fetch(`http://127.0.0.1:8000/api/v1/public_complaints/${reviewComplaintId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: "In Progress" })
+                });
+
+                if (response.ok) {
+                    closeReviewModal();
+                    fetchDashboardData();
+                } else {
+                    alert("Error rejecting repair.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+            btn.disabled = false;
+            btn.innerText = "Reject Repair";
+        }
+
+        async function runAIAnalysis() {
+            try {
+                await fetch("http://127.0.0.1:8000/api/v1/run_ai_analysis", { method: 'POST' });
+                alert("AI Analysis started in the background. Refresh the page in a few moments to see updates.");
+            } catch (error) {
+                console.error("Error triggering AI:", error);
+            }
+        }
+
+        async function fetchDashboardData() {
+            try {
+                // Fetch stats summary
+                const statsResponse = await fetch("http://127.0.0.1:8000/api/v1/stats/summary");
+                const stats = await statsResponse.json();
+                
+                document.getElementById("val-ai-detections").innerText = stats.ai_detections;
+                document.getElementById("val-public-complaints").innerText = stats.public_complaints;
+                document.getElementById("val-in-progress").innerText = stats.in_progress;
+                document.getElementById("val-resolved").innerText = stats.resolved;
+
+                // Fetch AI detections
+                const aiResponse = await fetch("http://127.0.0.1:8000/api/v1/ai_detections");
+                const aiDetections = await aiResponse.json();
+
+                const aiTableBody = document.getElementById("ai-table-body");
+                aiTableBody.innerHTML = "";
+
+                aiDetections.forEach(d => {
+                    let severityColor = "bg-slate-100 text-slate-600";
+                    if (d.severity === "CRITICAL" || d.severity === "HIGH") severityColor = "bg-red-100 text-red-600";
+                    else if (d.severity === "MEDIUM") severityColor = "bg-amber-100 text-amber-600";
+
+                    let row = `
+                    <tr class="hover:bg-slate-50 transition text-sm">
+                        <td class="p-4 font-bold text-indigo-600">#${d.id}</td>
+                        <td class="p-4">
+                            <div class="font-medium">${d.location}</div>
+                            <div class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-location-dot"></i> ${d.gps}</div>
+                        </td>
+                        <td class="p-4">
+                            <span class="status-pill px-3 py-1 text-xs font-bold ${severityColor}">${d.severity}</span>
+                        </td>
+                    </tr>
+                    `;
+                    aiTableBody.innerHTML += row;
+                });
+
+                // Fetch Public Complaints
+                const publicResponse = await fetch("http://127.0.0.1:8000/api/v1/public_complaints");
+                const publicComplaints = await publicResponse.json();
+                allPublicComplaints = publicComplaints;
+
+                const publicTableBody = document.getElementById("public-table-body");
+                publicTableBody.innerHTML = "";
+
+                publicComplaints.forEach((d, index) => {
+                    let severityColor = "bg-slate-100 text-slate-600";
+                    if (d.severity === "CRITICAL" || d.severity === "HIGH") severityColor = "bg-red-100 text-red-600";
+                    else if (d.severity === "MEDIUM") severityColor = "bg-amber-100 text-amber-600";
+
+                    let actionBtn = "-";
+                    if (d.status === "Pending Review") {
+                        actionBtn = `<button onclick="openReviewModal(${index})" class="clay-button bg-emerald-500 text-white px-3 py-1 text-xs font-bold hover:bg-emerald-600 shadow-md transition transform active:scale-95">Review</button>`;
+                    }
+
+                    let row = `
+                    <tr class="hover:bg-slate-50 transition text-sm">
+                        <td class="p-4 font-bold text-indigo-600">#${d.id}</td>
+                        <td class="p-4">
+                            <div class="font-medium">${d.location}</div>
+                            <div class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-location-dot"></i> ${d.gps}</div>
+                        </td>
+                        <td class="p-4">
+                            <span class="status-pill px-3 py-1 text-xs font-bold ${severityColor}">${d.severity}</span>
+                        </td>
+                        <td class="p-4 font-semibold">${d.status}</td>
+                        <td class="p-4">${actionBtn}</td>
+                    </tr>
+                    `;
+                    publicTableBody.innerHTML += row;
+                });
+
+            } catch (error) {
+                console.error("Error connecting to backend API:", error);
+            }
+        }
+
+        // Initialize on load
+        fetchDashboardData();
+    </script>
+</body>
+</html>

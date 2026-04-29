@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CityFix | Advanced Analytical Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 35px rgba(15, 23, 42, 0.08);
+            border-radius: 1.5rem;
+        }
+
+        .img-zoom:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 text-slate-700">
+
+    <header class="sticky top-0 z-40 bg-white/75 backdrop-blur border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="index.html"
+                    class="w-11 h-11 rounded-xl bg-indigo-100 flex items-center justify-center hover:bg-indigo-200 transition cursor-pointer">
+                    <i class="fa-solid fa-arrow-left text-indigo-600"></i>
+                </a>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-800">Advanced Analytics</h1>
+                    <p class="text-xs text-slate-500">Model Performance & Metrics</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="#training-loss" class="hover:text-indigo-600">Training Loss</a>
+                <a href="#curves" class="hover:text-indigo-600">Performance Curves</a>
+                <a href="#matrices" class="hover:text-indigo-600">Confusion Matrices</a>
+                <a href="#predictions" class="hover:text-indigo-600">Batch Predictions</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12 space-y-16">
+        <!-- HERO SECTION (Split Design) -->
+        <section class="flex flex-col lg:flex-row items-center gap-12 pt-4 pb-12">
+            <!-- LEFT SIDE (Text + Identity) -->
+            <div class="lg:w-3/5 flex flex-col justify-center text-left">
+                <!-- Tagline -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-sm font-bold mb-6 shadow-sm w-max">
+                    <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span> Research & Analytics Hub
+                </div>
+
+                <!-- Project Title -->
+                <h1 class="text-2xl font-black tracking-widest text-slate-800 uppercase mb-3">
+                    CITYFIX <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">AI</span>
+                </h1>
+
+                <!-- Main Heading -->
+                <h2
+                    class="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-slate-900 leading-[1.1] mb-6 tracking-tight">
+                    Model Evaluation &<br />
+                    <span class="text-indigo-600">Validation Metrics</span>
+                </h2>
+
+                <!-- Mini Description -->
+                <div class="space-y-2 text-lg text-slate-500 font-medium border-l-4 border-indigo-500 pl-6 py-2">
+                    <p>Deep-dive into YOLOv8 segmentation performance.</p>
+                    <p>Analyzing robustness, accuracy, and efficiency.</p>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE (Visual Impact) -->
+            <div class="lg:w-2/5 w-full relative group">
+                <div
+                    class="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-20 blur-xl rounded-[3rem] group-hover:opacity-40 transition duration-500">
+                </div>
+
+                <div class="relative bg-white p-4 rounded-[2rem] shadow-2xl border border-slate-100 flex flex-col">
+                    <div
+                        class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 flex items-center justify-center p-4">
+                        <!-- Abstract Data Visualization / Graph Placeholder -->
+                        <div
+                            class="w-full h-full relative rounded-xl border border-slate-200 bg-white shadow-inner overflow-hidden">
+                            <!-- Background Grid -->
+                            <div class="absolute inset-0"
+                                style="background-image: radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0); background-size: 20px 20px;">
+                            </div>
+
+                            <!-- Graph Lines -->
+                            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100"
+                                preserveAspectRatio="none">
+                                <path d="M 0,80 C 20,60 40,80 60,40 S 80,40 100,20 L 100,100 L 0,100 Z"
+                                    fill="rgba(99, 102, 241, 0.1)" />
+                                <path d="M 0,80 C 20,60 40,80 60,40 S 80,40 100,20" fill="none" stroke="#6366f1"
+                                    stroke-width="2" />
+
+                                <path d="M 0,90 C 30,70 50,90 70,50 S 90,60 100,30 L 100,100 L 0,100 Z"
+                                    fill="rgba(168, 85, 247, 0.1)" />
+                                <path d="M 0,90 C 30,70 50,90 70,50 S 90,60 100,30" fill="none" stroke="#a855f7"
+                                    stroke-width="2" stroke-dasharray="4" />
+                            </svg>
+                        </div>
+
+                        <!-- Overlay badges -->
+                        <div
+                            class="absolute top-8 right-8 px-3 py-1 bg-white/90 backdrop-blur text-indigo-700 text-xs font-bold rounded-lg border border-indigo-200 shadow-lg">
+                            <i class="fa-solid fa-chart-line mr-1"></i> Convergence
+                        </div>
+                        <div
+                            class="absolute bottom-8 left-8 px-3 py-1 bg-slate-900/90 backdrop-blur text-white text-xs font-bold rounded-lg border border-slate-700 shadow-lg">
+                            <i class="fa-solid fa-bullseye mr-1"></i> Precision 79%
+                        </div>
+                    </div>
+
+                    <p class="text-center text-sm font-semibold text-slate-500 mt-5 italic">
+                        "Empirical evidence of deployment-readiness"
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Training & Validation Loss -->
+        <section id="training-loss" class="glass-card p-8 md:p-10">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-4">Training Dynamics & Convergence</h3>
+                <p class="text-slate-600 leading-relaxed text-justify mb-2">
+                    The training and validation loss metrics demonstrate exceptional model convergence, showcasing a
+                    steep, monotonically decreasing trajectory across all epochs with negligible divergence.
+                </p>
+                <p class="text-slate-600 leading-relaxed text-justify mb-2">
+                    The tightly coupled bounding box, classification, and mask loss curves indicate that our
+                    optimization algorithm effectively mitigates over-parameterization and completely avoids vanishing
+                    gradients during deep feature extraction.
+                </p>
+                <p class="text-slate-600 leading-relaxed text-justify">
+                    This highly stable empirical risk minimization underscores the architecture's robust generalization
+                    capability, ensuring high-fidelity, pixel-perfect segmentation on real-world edge cases without
+                    succumbing to overfitting.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <!-- Curve 1 -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex flex-col">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Epoch-wise Optimization Trajectory
+                        (1)</h4>
+                    <img src="assets/analytics/loss curve 1.png" alt="Loss Curve 1"
+                        class="w-full h-auto rounded-lg shadow-sm img-zoom flex-grow object-contain">
+                    <p class="text-xs text-center text-slate-500 mt-3">Consistent downward trend in training loss
+                        indicating effective learning.</p>
+                </div>
+                <!-- Curve 2 -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex flex-col">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Validation Loss Stabilization (2)
+                    </h4>
+                    <img src="assets/analytics/loss curve 2.png" alt="Loss Curve 2"
+                        class="w-full h-auto rounded-lg shadow-sm img-zoom flex-grow object-contain">
+                    <p class="text-xs text-center text-slate-500 mt-3">Validation loss closely tracking training
+                        metrics, demonstrating minimal overfitting.</p>
+                </div>
+                <!-- Curve 3 -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex flex-col">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Bounding Box Refinement (3)</h4>
+                    <img src="assets/analytics/loss curve 3.png" alt="Loss Curve 3"
+                        class="w-full h-auto rounded-lg shadow-sm img-zoom flex-grow object-contain">
+                    <p class="text-xs text-center text-slate-500 mt-3">Sharp decrease in localization error leading to
+                        tighter bounding boxes.</p>
+                </div>
+                <!-- Curve 4 -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex flex-col">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Segmentation Precision
+                        Optimization (4)</h4>
+                    <img src="assets/analytics/loss curve 4.png" alt="Loss Curve 4"
+                        class="w-full h-auto rounded-lg shadow-sm img-zoom flex-grow object-contain">
+                    <p class="text-xs text-center text-slate-500 mt-3">Smooth convergence of pixel-level mask
+                        classification.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Confidence Curves Analysis -->
+        <section id="curves" class="glass-card p-8 md:p-10">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Confidence Curve Analysis</h3>
+                <p class="text-slate-600">These curves illustrate the well-calibrated confidence mechanism. A healthy
+                    trade-off between precision and recall ensures that our deployment thresholds are tunable and
+                    reliable.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- F1 Curve -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Segmentation F1 Curve</h4>
+                    <img src="assets/analytics/MaskF1_curve.png" alt="Mask F1 Curve"
+                        class="w-full h-auto rounded-lg img-zoom">
+                    <p class="text-xs text-center text-slate-500 mt-3">F1 Score peaks at optimal confidence threshold
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Detection F1 Curve</h4>
+                    <img src="assets/analytics/BoxF1_curve.png" alt="Box F1 Curve"
+                        class="w-full h-auto rounded-lg img-zoom">
+                    <p class="text-xs text-center text-slate-500 mt-3">Balanced precision-recall trade-off</p>
+                </div>
+                <!-- PR Curve -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Segmentation PR Curve</h4>
+                    <img src="assets/analytics/MaskPR_curve.png" alt="Mask PR Curve"
+                        class="w-full h-auto rounded-lg img-zoom">
+                    <p class="text-xs text-center text-slate-500 mt-3">Precision-Recall correlation</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Detection PR Curve</h4>
+                    <img src="assets/analytics/BoxPR_curve.png" alt="Box PR Curve"
+                        class="w-full h-auto rounded-lg img-zoom">
+                    <p class="text-xs text-center text-slate-500 mt-3">Robust detection accuracy</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Confusion Matrices -->
+        <section id="matrices" class="glass-card p-8 md:p-10">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Confusion Matrix Quality</h3>
+                <p class="text-slate-600">Balanced predictions with clear class boundaries, confirming that the model
+                    makes accurate and reliable predictions across varied road conditions without significant bias.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Confusion Matrix</h4>
+                    <img src="assets/analytics/confusion_matrix.png" alt="Confusion Matrix"
+                        class="w-full h-auto rounded-lg img-zoom">
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                    <h4 class="text-lg font-semibold text-slate-700 mb-3 text-center">Normalized Confusion Matrix</h4>
+                    <img src="assets/analytics/confusion_matrix_normalized.png" alt="Normalized Confusion Matrix"
+                        class="w-full h-auto rounded-lg img-zoom">
+                </div>
+            </div>
+        </section>
+
+        <!-- Batch Predictions -->
+        <section id="predictions" class="glass-card p-8 md:p-10">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Validation Batch Predictions</h3>
+                <p class="text-slate-600">Side-by-side comparison of ground-truth labels vs. model predictions
+                    demonstrating high precision localization and accurate pixel-level segmentation.</p>
+            </div>
+
+            <div class="space-y-12">
+                <!-- Batch 0 -->
+                <div class="grid lg:grid-cols-2 gap-6 items-center">
+                    <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-100">
+                        <h4 class="text-sm font-semibold text-slate-500 mb-2 uppercase tracking-wider text-center">
+                            Ground Truth Labels</h4>
+                        <img src="assets/analytics/val_batch0_labels.jpg" alt="Batch 0 Labels"
+                            class="w-full h-auto rounded-lg img-zoom">
+                    </div>
+                    <div class="bg-white rounded-xl p-3 shadow-sm border border-indigo-100 ring-2 ring-indigo-50">
+                        <h4 class="text-sm font-semibold text-indigo-500 mb-2 uppercase tracking-wider text-center">
+                            Model Predictions</h4>
+                        <img src="assets/analytics/val_batch0_pred.jpg" alt="Batch 0 Predictions"
+                            class="w-full h-auto rounded-lg img-zoom">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-8 text-center text-sm text-slate-500 border-t border-slate-200 mt-12 bg-white/50">
+        © 2026 CityFix. Safer roads through responsible AI.
+    </footer>
+</body>
+
+</html>

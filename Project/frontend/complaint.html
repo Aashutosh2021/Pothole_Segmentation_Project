@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CityFix | Register Complaint</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 text-slate-700">
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center">
+                    <i class="fa-solid fa-road text-indigo-600"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-800">CityFix Complaint Portal</h1>
+                    <p class="text-xs text-slate-500">Report potholes with media + GPS</p>
+                </div>
+            </div>
+            <a href="index.html" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm font-semibold">
+                <i class="fa-solid fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-10">
+        <!-- HERO SECTION -->
+        <section class="flex flex-col lg:flex-row items-center gap-12 pt-4 pb-12">
+            <!-- LEFT SIDE (Text + Identity) -->
+            <div class="lg:w-3/5 flex flex-col justify-center text-left">
+                <!-- Tagline -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-sm font-bold mb-6 shadow-sm w-max">
+                    <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span> Citizen Reporting Portal
+                </div>
+
+                <!-- Project Title -->
+                <h1 class="text-2xl font-black tracking-widest text-slate-800 uppercase mb-3">
+                    CITYFIX <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">AI</span>
+                </h1>
+
+                <!-- Main Heading -->
+                <h2
+                    class="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-slate-900 leading-[1.1] mb-6 tracking-tight">
+                    Register Complaints with<br />
+                    <span class="text-indigo-600">Pinpoint AI Accuracy</span>
+                </h2>
+
+                <!-- Mini Description -->
+                <div class="space-y-2 text-lg text-slate-500 font-medium border-l-4 border-indigo-500 pl-6 py-2">
+                    <p>Upload images or video evidence instantly</p>
+                    <p>AI automatically detects severity and location</p>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE (Visual Impact) -->
+            <div class="lg:w-2/5 w-full relative group">
+                <div
+                    class="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-emerald-500 opacity-20 blur-xl rounded-[3rem] group-hover:opacity-40 transition duration-500">
+                </div>
+
+                <div class="relative bg-white p-4 rounded-[2rem] shadow-2xl border border-slate-100 flex flex-col">
+                    <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=600&q=80"
+                            alt="Complaint Reporting" class="absolute inset-0 w-full h-full object-cover">
+
+                        <div
+                            class="absolute top-4 right-4 px-3 py-1 bg-indigo-600/90 backdrop-blur text-white text-xs font-bold rounded-lg border border-indigo-400 shadow-lg">
+                            <i class="fa-solid fa-location-dot mr-1"></i> GPS Tagged
+                        </div>
+                        <div
+                            class="absolute bottom-4 left-4 px-3 py-1 bg-slate-900/90 backdrop-blur text-white text-xs font-bold rounded-lg border border-slate-700 shadow-lg">
+                            <i class="fa-solid fa-robot mr-1"></i> AI Analyzing
+                        </div>
+                    </div>
+
+                    <p class="text-center text-sm font-semibold text-slate-500 mt-5 italic">
+                        "Your camera is the city's smartest sensor"
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPLAINT FORM -->
+        <section class="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-slate-100">
+            <div class="mb-8 pb-6 border-b border-slate-100 flex items-center gap-4">
+                <div
+                    class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800">Submission Details</h3>
+                    <p class="text-slate-500 text-sm mt-1">Please provide accurate information for faster resolution.
+                    </p>
+                </div>
+            </div>
+
+            <form id="complaintForm" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Full Name *</label>
+                        <input id="fullName" type="text" required
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                            placeholder="Enter your name" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Phone Number *</label>
+                        <input id="phone" type="tel" required
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                            placeholder="+91 XXXXX XXXXX" />
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Email Address</label>
+                        <input id="email" type="email"
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                            placeholder="you@example.com" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Issue Type *</label>
+                        <select id="issueType" required
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                            <option value="">Select issue type</option>
+                            <option value="Pothole">Pothole</option>
+                            <option value="Road Crack">Road Crack</option>
+                            <option value="Road Subsidence">Road Subsidence</option>
+                            <option value="Drainage Issue">Drainage Issue</option>
+                            <option value="Open Manhole">Open Manhole</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Severity</label>
+                        <input id="severity" type="text" disabled
+                            class="w-full rounded-xl border border-slate-300 bg-slate-100 px-4 py-3 text-slate-500"
+                            placeholder="Auto-determined by AI" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Zone / Ward *</label>
+                        <select id="zone" required
+                            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                            <option value="">Select zone</option>
+                            <option value="Zone 1 - Central">Zone 1 - Central</option>
+                            <option value="Zone 2 - North">Zone 2 - North</option>
+                            <option value="Zone 3 - South">Zone 3 - South</option>
+                            <option value="Zone 4 - East">Zone 4 - East</option>
+                            <option value="Zone 5 - West">Zone 5 - West</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Location / Address *</label>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input id="locationInput" type="text" required
+                            class="flex-1 rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                            placeholder="Auto-filled by GPS or enter manually" />
+                        <button type="button" id="fetchLocationBtn"
+                            class="px-4 py-3 rounded-xl bg-indigo-100 text-indigo-700 font-semibold hover:bg-indigo-200">
+                            <i class="fa-solid fa-location-crosshairs mr-2"></i>Fetch GPS
+                        </button>
+                    </div>
+                    <p id="gpsStatus" class="text-xs text-slate-500 mt-2">Trying to auto-fetch your GPS location...</p>
+                    <input id="gpsCoords" type="hidden" value="" />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Description *</label>
+                    <textarea id="description" rows="4" required
+                        class="w-full rounded-xl border border-slate-300 px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                        placeholder="Describe pothole size, lane, nearby landmark, traffic impact, etc."></textarea>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="rounded-2xl border border-slate-300 p-4 bg-slate-50">
+                        <h3 class="font-semibold mb-3">Upload from Device</h3>
+                        <input id="deviceUpload" type="file" accept="image/*,video/*" class="block w-full text-sm" />
+                        <p class="text-xs text-slate-500 mt-2">Choose image/video from gallery or files.</p>
+                    </div>
+                    <div class="rounded-2xl border border-slate-300 p-4 bg-slate-50">
+                        <h3 class="font-semibold mb-3">Capture from Camera</h3>
+                        <input id="cameraUpload" type="file" accept="image/*,video/*" capture="environment"
+                            class="block w-full text-sm" />
+                        <p class="text-xs text-slate-500 mt-2">Directly click from rear camera (supported on mobile).
+                        </p>
+                    </div>
+                </div>
+
+                <div id="previewBox" class="hidden rounded-2xl border border-indigo-200 bg-indigo-50 p-4">
+                    <p class="text-sm font-semibold text-indigo-700 mb-3">Selected Media:</p>
+                    <div id="fileMeta" class="text-sm text-slate-600 mb-3"></div>
+                    <div id="mediaPreview"></div>
+                </div>
+
+                <label class="flex items-start gap-3">
+                    <input id="terms" type="checkbox" required class="mt-1" />
+                    <span class="text-sm text-slate-600">I confirm that the above information is accurate and I agree to
+                        the complaint submission policy.</span>
+                </label>
+
+                <button type="submit"
+                    class="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 transition">
+                    <i class="fa-solid fa-paper-plane mr-2"></i>Submit Complaint
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const complaintForm = document.getElementById('complaintForm');
+        const fetchLocationBtn = document.getElementById('fetchLocationBtn');
+        const gpsStatus = document.getElementById('gpsStatus');
+        const locationInput = document.getElementById('locationInput');
+        const gpsCoordsInput = document.getElementById('gpsCoords');
+        const deviceUpload = document.getElementById('deviceUpload');
+        const cameraUpload = document.getElementById('cameraUpload');
+        const previewBox = document.getElementById('previewBox');
+        const fileMeta = document.getElementById('fileMeta');
+        const mediaPreview = document.getElementById('mediaPreview');
+
+        let selectedFile = null;
+
+        function setGpsStatus(message, isError = false) {
+            gpsStatus.textContent = message;
+            gpsStatus.className = `text-xs mt-2 ${isError ? 'text-red-500' : 'text-slate-500'}`;
+        }
+
+        async function reverseGeocode(lat, lng) {
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+                if (!res.ok) return `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                const data = await res.json();
+                return data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+            } catch {
+                return `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+            }
+        }
+
+        async function fetchGPSLocation() {
+            if (!navigator.geolocation) {
+                setGpsStatus('Geolocation not supported in this browser.', true);
+                return;
+            }
+
+            setGpsStatus('Fetching your current GPS location...');
+
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    gpsCoordsInput.value = `${lat},${lng}`;
+
+                    const readableAddress = await reverseGeocode(lat, lng);
+                    locationInput.value = readableAddress;
+                    setGpsStatus(`GPS fetched successfully: ${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+                },
+                () => {
+                    setGpsStatus('Unable to fetch location. Please allow location permission and try again.', true);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        function renderMediaPreview(file) {
+            if (!file) {
+                previewBox.classList.add('hidden');
+                fileMeta.textContent = '';
+                mediaPreview.innerHTML = '';
+                return;
+            }
+
+            const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            fileMeta.innerHTML = `<strong>Name:</strong> ${file.name}<br><strong>Type:</strong> ${file.type || 'N/A'}<br><strong>Size:</strong> ${sizeMB} MB`;
+
+            const fileUrl = URL.createObjectURL(file);
+            if (file.type.startsWith('image/')) {
+                mediaPreview.innerHTML = `<img src="${fileUrl}" alt="Uploaded preview" class="max-h-64 rounded-xl border border-slate-200" />`;
+            } else if (file.type.startsWith('video/')) {
+                mediaPreview.innerHTML = `<video src="${fileUrl}" controls class="max-h-64 rounded-xl border border-slate-200"></video>`;
+            } else {
+                mediaPreview.innerHTML = `<p class="text-sm text-slate-600">Preview not available for this file type.</p>`;
+            }
+
+            previewBox.classList.remove('hidden');
+        }
+
+        async function analyzeMedia(file) {
+            const severityInput = document.getElementById('severity');
+            severityInput.value = 'Analyzing...';
+            try {
+                const toBase64 = f => new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(f);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+                const base64 = await toBase64(file);
+
+                const response = await fetch('http://127.0.0.1:8000/api/v1/analyze_image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image_base64: base64 })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    severityInput.value = data.severity;
+                } else {
+                    severityInput.value = 'Failed to analyze';
+                }
+            } catch (err) {
+                console.error(err);
+                severityInput.value = 'Error analyzing';
+            }
+        }
+
+        function handleFileSelect(input, otherInput) {
+            if (!input.files || !input.files[0]) return;
+            selectedFile = input.files[0];
+            otherInput.value = '';
+            renderMediaPreview(selectedFile);
+            analyzeMedia(selectedFile);
+        }
+
+        fetchLocationBtn.addEventListener('click', fetchGPSLocation);
+        deviceUpload.addEventListener('change', () => handleFileSelect(deviceUpload, cameraUpload));
+        cameraUpload.addEventListener('change', () => handleFileSelect(cameraUpload, deviceUpload));
+
+        complaintForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            if (!selectedFile) {
+                alert('Please upload/capture an image or video before submitting.');
+                return;
+            }
+
+            const issueType = document.getElementById('issueType').value;
+            const zone = document.getElementById('zone').value;
+            const description = document.getElementById('description').value.trim();
+            const location = locationInput.value.trim();
+            const gps = gpsCoordsInput.value;
+
+            const toBase64 = file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+            const imageBase64 = await toBase64(selectedFile);
+
+            const payload = {
+                title: `${issueType} - ${zone}`,
+                location: location,
+                gps: gps || 'GPS not available',
+                description: description,
+                image_base64: imageBase64
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/v1/public_complaints', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to submit complaint');
+                }
+
+                await response.json();
+
+                alert('Complaint submitted successfully. GPS and media details captured.');
+                complaintForm.reset();
+                selectedFile = null;
+                renderMediaPreview(null);
+                fetchGPSLocation();
+            } catch (error) {
+                console.error(error);
+                alert('There was an error submitting the complaint. Please try again.');
+            }
+        });
+
+        // Auto-fetch GPS on page load
+        fetchGPSLocation();
+    </script>
+</body>
+
+</html>

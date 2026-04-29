@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityFix | Worker Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: #eef2f7;
+        }
+
+        .clay-card {
+            background: #ffffff;
+            border-radius: 30px;
+            box-shadow: 
+                10px 10px 20px #d1d9e6, 
+                -10px -10px 20px #ffffff,
+                inset -8px -8px 12px rgba(0,0,0,0.05), 
+                inset 8px 8px 12px rgba(255,255,255,0.8);
+        }
+
+        .clay-button {
+            border-radius: 20px;
+            transition: all 0.2s ease;
+            box-shadow: 
+                4px 4px 8px rgba(0,0,0,0.1), 
+                inset -4px -4px 8px rgba(0,0,0,0.1), 
+                inset 4px 4px 8px rgba(255,255,255,0.3);
+        }
+
+        .clay-button:active {
+            transform: scale(0.95);
+            box-shadow: 
+                inset 4px 4px 8px rgba(0,0,0,0.2), 
+                inset -4px -4px 8px rgba(255,255,255,0.1);
+        }
+
+        .clay-sidebar {
+            background: #f59e0b; /* Amber color for workers */
+            border-radius: 0 40px 40px 0;
+            box-shadow: 10px 0 30px rgba(245, 158, 11, 0.2);
+        }
+        
+        .status-pill {
+            border-radius: 15px;
+            box-shadow: inset -3px -3px 6px rgba(0,0,0,0.1), inset 3px 3px 6px rgba(255,255,255,0.4);
+        }
+
+        /* Modal Styles */
+        #update-modal {
+            display: none;
+        }
+        #update-modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+    <aside class="fixed left-0 top-0 h-screen w-64 clay-sidebar text-white p-6 hidden md:block">
+        <div class="flex items-center gap-3 mb-12 px-2">
+            <div class="bg-white p-3 rounded-2xl shadow-lg">
+                <i class="fa-solid fa-hard-hat text-amber-500 text-xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold tracking-tight">CityFix</h1>
+        </div>
+        <nav class="space-y-6">
+            <a href="#" class="flex items-center gap-4 p-4 rounded-2xl bg-amber-400 shadow-inner font-semibold transition">
+                <i class="fa-solid fa-wrench"></i> <span>Assigned Jobs</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="md:ml-64 p-6 md:p-10">
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-800">Worker Portal</h2>
+                <p class="text-slate-500 font-medium">Update Pothole Repair Status</p>
+            </div>
+        </header>
+
+        <!-- Complaints Table -->
+        <div class="clay-card overflow-hidden">
+            <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+                <h3 class="text-xl font-bold text-slate-800">Active Complaints</h3>
+            </div>
+            <table class="w-full text-left">
+                <thead class="bg-amber-50/50">
+                    <tr class="text-slate-500 uppercase text-xs font-bold tracking-wider">
+                        <th class="p-4">ID</th>
+                        <th class="p-4">Location</th>
+                        <th class="p-4">Severity</th>
+                        <th class="p-4">Status</th>
+                        <th class="p-4">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100" id="complaints-table-body">
+                    <!-- Data here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Update Modal -->
+    <div id="update-modal" class="fixed inset-0 bg-slate-900/50 items-center justify-center z-50">
+        <div class="clay-card w-full max-w-md p-8 m-4 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-6 text-slate-800">Update Status</h3>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-semibold mb-2 text-slate-600">Complaint ID</label>
+                <div id="modal-complaint-id" class="font-bold text-lg text-amber-600"></div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-semibold mb-2 text-slate-600">New Status</label>
+                <select id="status-select" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none focus:ring-2 focus:ring-amber-500" onchange="toggleReviewFields()">
+                    <option value="In Progress">In Progress</option>
+                    <option value="Pending Review">Repaired (Submit for Review)</option>
+                </select>
+            </div>
+
+            <div id="review-fields" class="hidden mb-6 space-y-4">
+                <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                    <p class="text-sm text-amber-800 mb-3"><i class="fa-solid fa-circle-info mr-2"></i>To submit a repair for review, you must upload a photo and share your current GPS location.</p>
+                    
+                    <label class="block text-sm font-semibold mb-2 text-slate-600">Repaired Pothole Photo</label>
+                    <input type="file" id="repair-image" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 mb-4">
+                    
+                    <label class="block text-sm font-semibold mb-2 text-slate-600">Your Current GPS Location</label>
+                    <div class="flex items-center gap-2">
+                        <button onclick="fetchGPS()" class="clay-button bg-blue-500 text-white px-4 py-2 text-sm font-semibold hover:bg-blue-600">
+                            <i class="fa-solid fa-location-crosshairs mr-2"></i> Get GPS
+                        </button>
+                        <span id="gps-status" class="text-sm font-medium text-slate-500">Not fetched</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="submitUpdate()" id="submit-btn" class="clay-button w-full bg-amber-500 text-white font-bold py-3 text-lg hover:bg-amber-600 mt-4">
+                Update Complaint
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentComplaintId = null;
+        let fetchedGPS = null;
+        let imageBase64 = null;
+
+        async function fetchComplaints() {
+            try {
+                const response = await fetch("http://127.0.0.1:8000/api/v1/public_complaints");
+                const complaints = await response.json();
+                const tableBody = document.getElementById("complaints-table-body");
+                tableBody.innerHTML = "";
+
+                complaints.forEach(d => {
+                    // Only show pending or in progress
+                    if (d.status === "Resolved") return;
+
+                    let severityColor = "bg-slate-100 text-slate-600";
+                    if (d.severity === "CRITICAL" || d.severity === "HIGH") severityColor = "bg-red-100 text-red-600";
+                    else if (d.severity === "MEDIUM") severityColor = "bg-amber-100 text-amber-600";
+
+                    let actionBtn = "";
+                    if (d.status === "Pending Review") {
+                        actionBtn = `<span class="text-sm font-semibold text-slate-400"><i class="fa-solid fa-clock mr-1"></i> Waiting for Admin</span>`;
+                    } else {
+                        actionBtn = `<button onclick="openModal('${d.id}', '${d.status}')" class="clay-button bg-amber-500 text-white px-4 py-2 text-sm font-bold hover:bg-amber-600">Update</button>`;
+                    }
+
+                    let row = `
+                    <tr class="hover:bg-slate-50 transition text-sm">
+                        <td class="p-4 font-bold text-amber-600">${d.id}</td>
+                        <td class="p-4">
+                            <div class="font-medium">${d.location}</div>
+                            <div class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-location-dot"></i> ${d.gps}</div>
+                        </td>
+                        <td class="p-4">
+                            <span class="status-pill px-3 py-1 text-xs font-bold ${severityColor}">${d.severity}</span>
+                        </td>
+                        <td class="p-4 font-semibold">${d.status}</td>
+                        <td class="p-4">
+                            ${actionBtn}
+                        </td>
+                    </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Error fetching complaints:", error);
+            }
+        }
+
+        function openModal(id, currentStatus) {
+            currentComplaintId = id;
+            document.getElementById("modal-complaint-id").innerText = id;
+            
+            // Reset fields
+            fetchedGPS = null;
+            imageBase64 = null;
+            document.getElementById("gps-status").innerText = "Not fetched";
+            document.getElementById("gps-status").className = "text-sm font-medium text-slate-500";
+            document.getElementById("repair-image").value = "";
+            document.getElementById("status-select").value = currentStatus === "Pending" ? "In Progress" : "Pending Review";
+            toggleReviewFields();
+
+            document.getElementById("update-modal").classList.add("active");
+        }
+
+        function closeModal() {
+            document.getElementById("update-modal").classList.remove("active");
+        }
+
+        function toggleReviewFields() {
+            const status = document.getElementById("status-select").value;
+            const reviewFields = document.getElementById("review-fields");
+            if (status === "Pending Review") {
+                reviewFields.classList.remove("hidden");
+            } else {
+                reviewFields.classList.add("hidden");
+            }
+        }
+
+        function fetchGPS() {
+            if ("geolocation" in navigator) {
+                document.getElementById("gps-status").innerText = "Fetching...";
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude.toFixed(6);
+                    const lon = position.coords.longitude.toFixed(6);
+                    fetchedGPS = `${lat}, ${lon}`;
+                    document.getElementById("gps-status").innerText = `GPS: ${fetchedGPS}`;
+                    document.getElementById("gps-status").className = "text-sm font-bold text-emerald-600";
+                }, (error) => {
+                    alert("Error fetching GPS. Please enable location permissions.");
+                    document.getElementById("gps-status").innerText = "Failed";
+                    document.getElementById("gps-status").className = "text-sm font-bold text-red-600";
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Convert image file to base64
+        document.getElementById('repair-image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                imageBase64 = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        async function submitUpdate() {
+            const status = document.getElementById("status-select").value;
+            const btn = document.getElementById("submit-btn");
+
+            if (status === "Pending Review") {
+                if (!imageBase64) {
+                    alert("Please upload a photo of the repaired pothole.");
+                    return;
+                }
+                if (!fetchedGPS) {
+                    alert("Please fetch your GPS location.");
+                    return;
+                }
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Updating...";
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/v1/public_complaints/${currentComplaintId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        status: status,
+                        repaired_image_base64: imageBase64,
+                        worker_gps: fetchedGPS
+                    })
+                });
+
+                if (response.ok) {
+                    closeModal();
+                    fetchComplaints();
+                } else {
+                    alert("Error updating complaint.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Failed to connect to the server.");
+            }
+
+            btn.disabled = false;
+            btn.innerText = "Update Complaint";
+        }
+
+        fetchComplaints();
+    </script>
+</body>
+</html>
