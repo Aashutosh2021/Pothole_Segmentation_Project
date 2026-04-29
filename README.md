@@ -63,7 +63,7 @@ Pothole_Segmentation_Project/
 - License: **CC BY 4.0**
 - Export format: **YOLOv8 segmentation**
 - Classes: `1` (`Pothole`)
-- Total images: **780**
+- Total images: **2100+**
 - Input size preprocessing: **640x640**
 - Augmentations include flip, crop, rotation, shear, brightness, and exposure adjustments.
 
