@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Project\frontend\assets\analytics\logo.png" alt="CityFix.AI Logo" width="500"/>
+</p>
+
 # CityFix.AI — Pothole Segmentation + Smart Complaint & Repair Workflow
 
 CityFix.AI is an end-to-end pothole intelligence system that combines:
@@ -280,7 +284,4 @@ Dataset attribution from source files:
 
 Please preserve attribution if redistributing dataset-derived artifacts.
 
-<p align="center">
-  <img src="Project\frontend\assets\analytics\logo.png" alt="CityFix.AI Logo" width="300"/>
-</p>
 
