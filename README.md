@@ -87,6 +87,70 @@ From `CRDD/runs/segment/train9/args.yaml`:
 - Mosaic: `0.7`, MixUp: `0.05`
 - AMP: enabled
 
+--------------------------------------------------------------------------------------------------------------------------------
+
+## 🚨 Model Weights (Important)
+
+Due to GitHub file size limits, large model files (`.pt`) are **not included in this repository**.
+
+### 📥 Download Model Files
+
+👉 Download all required model weights from here:
+https://drive.google.com/drive/folders/1-7MIMo72D-V70WyjlnbqrUEaBVs1f9T6?usp=sharing
+
+*(Replace this link with your actual Google Drive / Kaggle link)*
+
+---
+
+### 📁 After Download (Very Important)
+
+Place the downloaded files in the following locations:
+
+```
+CRDD/
+├── yolov8n-seg.pt
+├── yolov8m-seg.pt
+├── yolov8l-seg.pt
+├── yolov8x-seg.pt
+
+CRDD/runs/segment/train9/weights/
+├── best.pt
+├── last.pt
+
+Project/backend/
+├── best.pt
+```
+
+---
+
+### ⚠️ Notes
+
+* Make sure filenames remain **exactly same**
+* Do not rename `.pt` files
+* If paths are wrong, backend will fail to load model
+
+---
+
+### 🚀 Quick Fix (if error comes)
+
+If model not loading:
+
+* Check file path in `Project/backend/main.py`
+* Use relative path:
+
+  ```
+  Project/backend/best.pt
+  ```
+
+---
+
+### 💡 Why this is needed?
+
+GitHub restricts files larger than **100MB**, so model weights must be downloaded separately.
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
 ### Final Metrics (Epoch 120)
 
 From `results.csv` final row:
