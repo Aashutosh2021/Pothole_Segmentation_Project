@@ -98,7 +98,6 @@ Due to GitHub file size limits, large model files (`.pt`) are **not included in 
 👉 Download all required model weights from here:
 https://drive.google.com/drive/folders/1-7MIMo72D-V70WyjlnbqrUEaBVs1f9T6?usp=sharing
 
-*(Replace this link with your actual Google Drive / Kaggle link)*
 
 ---
 
